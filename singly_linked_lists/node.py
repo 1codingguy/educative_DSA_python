@@ -104,13 +104,23 @@ class LinkedList:
         prev_node.next = current_node.next
         current_node = None
 
+    def len_iterative(self):
+        length = 0
+        current_node = self.head
+        while current_node:
+            length += 1
+            current_node = current_node.next
+        return length
+
 
 llist = LinkedList()
 llist.append("A")
 llist.append("B")
 llist.append("C")
 llist.append("D")
+print(llist.len_iterative())
 
 llist.delete_node_at_pos(2)
 
 llist.print_list()
+print(llist.len_iterative())
