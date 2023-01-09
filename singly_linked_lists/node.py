@@ -53,13 +53,44 @@ class LinkedList:
         # update prev_node.next, to point to the new node
         prev_node.next = new_node
 
+    def delete_node(self, key):
+        # 1. case of deleting head node
+        # Assume head node is Node_A
+        # self.head points to Node_A
+        # current_node points to Node_A
+        current_node = self.head
+        # if a head node exists (not None) and its data property matches the key
+        if current_node and current_node.data == key:
+            # self.head points to Node_B
+            self.head = current_node.next
+            # current_node points to None
+            # So no variables point to Node_A any more, which is then deleted 
+            current_node = None
+            return
+        # 2. case of deleting node other than the head
+        prev_node = None # optional, prev_node can be init within the while loop as well
+        # Assume deleting Node_B
+        # while current_node is to check if we are already at the end of the linked list
+        while current_node and current_node.data != key:
+            prev_node = current_node # prev_node == Node_A when while loop terminated
+            current_node = current_node.next # current_node == Node_B when while loop terminated
+        # for the case that we are at the end of the linked list but still can't find the node with key
+        if current_node is None:
+            return
+        # Node_A.next needs to point to Node_C
+        prev_node.next = current_node.next
+        # delete Node_B
+        current_node = None
+
 
 llist = LinkedList()
 llist.append("A")
 llist.append("B")
 llist.append("C")
+llist.append("D")
 
-
-llist.insert_after_node(llist.head.next, "D")
+llist.delete_node("B")
+llist.delete_node("E")
 
 llist.print_list()
+
