@@ -64,16 +64,17 @@ class LinkedList:
             # self.head points to Node_B
             self.head = current_node.next
             # current_node points to None
-            # So no variables point to Node_A any more, which is then deleted 
+            # So no variables point to Node_A any more, which is then deleted
             current_node = None
             return
         # 2. case of deleting node other than the head
-        prev_node = None # optional, prev_node can be init within the while loop as well
+        prev_node = None  # optional, prev_node can be init within the while loop as well
         # Assume deleting Node_B
         # while current_node is to check if we are already at the end of the linked list
         while current_node and current_node.data != key:
-            prev_node = current_node # prev_node == Node_A when while loop terminated
-            current_node = current_node.next # current_node == Node_B when while loop terminated
+            prev_node = current_node  # prev_node == Node_A when while loop terminated
+            # current_node == Node_B when while loop terminated
+            current_node = current_node.next
         # for the case that we are at the end of the linked list but still can't find the node with key
         if current_node is None:
             return
@@ -89,7 +90,7 @@ class LinkedList:
             self.head = current_node.next
             current_node = None
             return
-        
+
         # 2. delete according to index
         current_index = 0
         prev_node = None
@@ -112,15 +113,23 @@ class LinkedList:
             current_node = current_node.next
         return length
 
+    # init call have to pass the head node as argument so that it can traverse by calling node.next
+    # no need to init a count variable because the return statement aggregate cumulative result from recursive calls
+    def len_recursive(self, node):
+        if node is None:
+            return 0
+        return 1 + self.len_recursive(node.next)
+
 
 llist = LinkedList()
+print("The length of an empty linked list is:")
+print(llist.len_recursive(llist.head))
 llist.append("A")
 llist.append("B")
 llist.append("C")
 llist.append("D")
-print(llist.len_iterative())
 
-llist.delete_node_at_pos(2)
-
-llist.print_list()
+print("The length of the linked list calculated recursively after inserting 4 elements is:")
+print(llist.len_recursive(llist.head))
+print("The length of the linked list calculated iteratively after inserting 4 elements is:")
 print(llist.len_iterative())
